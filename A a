@@ -17,7 +17,7 @@ void explore(int u, int visited[], char graph[][5]){
 	int u1;
 	visited[u] = 1;
 
-    for(int i=0;i<3334;i++){
+    for(int i=0;i<5757;i++){
     	if( cocanh(u,i,graph)&&!visited[i])
         {
             explore(i,visited,graph);
@@ -30,7 +30,7 @@ void explore(int u, int visited[], char graph[][5]){
 int main(){
     int visited[10000]={0};
     char graph[10000][5];
-    for(int i=0;i<3334;i++){
+    for(int i=0;i<5757;i++){
     	for(int j=0;j<5;j++){
     		scanf(" %c", &graph[i][j]);
     	}
@@ -40,7 +40,7 @@ int main(){
     		
     int lienthong = 0;
 
-for(int i=0;i<3334;i++)
+for(int i=0;i<5757;i++)
 {
     if(visited[i]==0)
     {
