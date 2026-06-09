@@ -59,7 +59,7 @@ void bfs(int start,int stop, char graph[][5])
                          printf("%c", graph[path[i]][j]);
                         
                         }
-                        printf(" ");
+                        printf(", ");
                     }
                     return;
                 }
