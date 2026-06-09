@@ -1,0 +1,107 @@
+#include <stdio.h>
+
+int cocanh(int u,int v, char graph[][5]){
+	int count=0;
+	for(int j=0;j<5;j++){
+			if(graph[u][j]==graph[v][j]){
+				count++;
+			}
+		}	
+	if(count==4){
+		return 1;
+	}else{
+		return 0;
+	}
+}
+
+void bfs(int start,int stop, char graph[][5])
+{
+    int parent[10000];
+    int queue[10000];
+    int front = 0;
+    int rear = 0;
+    int path[10000];
+    int len = 0;
+
+    int dist[10000];
+    for(int i=0;i<5757;i++)
+{
+    dist[i] = -1;
+    parent[i] = -1;
+}
+
+
+    for(int i=0;i<5757;i++)
+        dist[i] = -1;
+
+    dist[start] = 0;
+
+    queue[rear++] = start;
+
+    while(front < rear)
+    {
+        int u = queue[front++];
+
+        for(int v=0;v<5757;v++)
+        {
+            if(cocanh(u,v,graph) && dist[v] == -1)
+            {
+                
+                dist[v] = dist[u] + 1;
+                parent[v] = u;
+                queue[rear++] = v;
+                if(v==stop){
+                    for(int i=stop;i!=-1;i=parent[i]){
+                        path[len++] = i;
+                    }
+                    for(int i = len-1; i >= 0; i--){
+                        for(int j=0;j<5;j++){
+                         printf("%c", graph[path[i]][j]);
+                        
+                        }
+                        printf(" ");
+                    }
+                    return;
+                }
+            }
+        }
+    }
+    
+}
+
+void nhapvao(int*u,char graph[][5]){
+    int t=0;
+    char dinh[1][5];
+    
+    for(int i=0;i<5;i++){
+    scanf(" %c", &dinh[0][i]);
+    }
+   for(int i=0;i<5757;i++){
+       t=0;
+        for(int j=0;j<5;j++){
+            if(graph[i][j]==dinh[0][j]){
+                t++;
+            }
+        }
+        if(t==5){
+            *u=i;
+            break;
+        }
+    }
+    
+}
+
+int main(){
+    int u,v;
+    char graph[10000][5];
+    for(int i=0;i<5757;i++){
+    	for(int j=0;j<5;j++){
+    		scanf(" %c", &graph[i][j]);
+    	}
+    }
+   nhapvao(&u,graph);
+   nhapvao(&v,graph);
+   bfs(u,v,graph);
+  
+    return 0;
+}
