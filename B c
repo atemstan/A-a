@@ -65,7 +65,7 @@ void bfs(int start,int stop, char graph[][5],char matran[][5757])
                         
                         }
                         if(i!=0){
-                        printf("→ ");
+                        printf(" → ");
                         }
                     }
                     return;
