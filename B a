@@ -1,0 +1,106 @@
+#include <stdio.h>
+
+int cocanh(int u,int v,char graph[][5])
+{
+    int count = 0;
+    int datham[5] = {0};
+    for(int i=1;i<5;i++)
+    {
+        for(int j=0;j<5;j++)
+        {
+            if(graph[u][i] == graph[v][j] && !datham[j])
+            {
+                datham[j] = 1;
+                count++;
+                break;
+            }
+        }
+    }
+    return count == 4;
+}
+void explore(int u, int visited[], char graph[][5],char matranT[][5757], int *timer, int post[], int pre[]){
+	visited[u] = 1;
+	pre[u] = (*timer)++;
+    for(int i=0;i<5757;i++){
+    	if( matranT[u][i]&&!visited[i])
+        {
+            explore(i,visited,graph, matranT,timer,post,pre);
+        }
+    }
+    post[u] = (*timer)++;  
+}
+void explore2(int u, int visited2[], char graph[][5],char matran[][5757]){
+	visited2[u] = 1;
+    for(int i=0;i<5757;i++){
+    	if( matran[u][i]&&!visited2[i])
+        {
+            explore2(i,visited2,graph,matran);
+        }
+    }
+}
+
+int kiemtra(int visited2[], int post[]){
+    int tham=0;
+    int max=0;
+    for(int i=0;i<5757;i++){
+        if(!visited2[i]&&max<post[i]){
+            tham=i;
+            max=post[i];
+        }
+    }
+    if(max==0){
+        return -1;
+    }else{
+    return tham;
+    }
+}
+
+int main(){
+    int visited[10000]={0};
+    int visited2[10000]={0};
+    char graph[10000][5];
+    int timer=0;
+    int post[5757]={0};
+    int pre[5757]={0};
+    static char matran[5757][5757];
+    static char matranT[5757][5757];
+    int count=0;
+    for(int i=0;i<5757;i++){
+    	for(int j=0;j<5;j++){
+    		scanf(" %c", &graph[i][j]);
+    	}
+    }
+    for(int i=0;i<5757;i++){
+        for(int j=0;j<5757;j++){
+            if(cocanh(i,j, graph)==1){
+                matran[i][j]=1;
+            }
+        }
+    }
+    for(int i=0;i<5757;i++){
+       for(int j=0;j<5757;j++){
+           matranT[j][i]=matran[i][j];
+       } 
+    }
+    for(int i=0;i<5757;i++){
+         if(visited[i]==0){
+             explore(i,visited,graph,matranT,&timer,post,pre);
+         }
+    }
+    for(int i=0;i<5757;i++)
+{
+    int u = kiemtra(visited2,post);
+
+    if(u == -1)
+        break;
+
+    if(!visited2[u])
+    {
+        explore2(u,visited2,graph,matran);
+        count++;
+    }
+}
+
+printf("%d", count);
+    return 0;
+}
